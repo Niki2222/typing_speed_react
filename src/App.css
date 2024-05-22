@@ -48,3 +48,20 @@ button {
   border-radius: 5px;
   border-color: blue;
 }
+
+p {
+  padding: 20px;
+  margin: 10px auto;
+  text-align: left;
+}
+
+textarea {
+  font-size: 1rem;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+#testing {
+  background-color: beige;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

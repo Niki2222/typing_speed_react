@@ -1,122 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-
-function StartGame({ paragraph, resetGame }) {
-  const [timer, setTimer] = useState(10);
-  const [wordsPerMinute, setWordsPerMinute] = useState(0);
-  const [inputText, setInputText] = useState("");
-  const [isTimerStarted, setIsTimerStarted] = useState(false);
-  const [correctWords, setCorrectWords] = useState(0);
-
-  useEffect(() => {
-    let interval;
-    if (isTimerStarted) {
-      interval = setInterval(() => {
-        setTimer(prevTimer => {
-          if (prevTimer > 0) {
-            return prevTimer - 1;
-          } else {
-            clearInterval(interval);
-            return 0;
-          }
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isTimerStarted]);
-
-  useEffect(() => {
-    if (timer === 0) {
-      setWordsPerMinute(correctWords);
-    }
-  }, [timer, correctWords]);
-
-  function handleInputChange(e) {
-    if (!isTimerStarted) {
-      setIsTimerStarted(true);
-    }
-    setInputText(e.target.value);
-    calculateCorrectWords(e.target.value);
-  }
-
-  function calculateCorrectWords(text) {
-    const words = text.trim().split(' ');
-    const paragraphWords = paragraph.split(' ');
-    let correctCount = 0;
-
-    words.forEach((word, index) => {
-      if (index < paragraphWords.length) {
-        if (word === paragraphWords[index]) {
-          correctCount++;
-        }
-      }
-    });
-
-    setCorrectWords(correctCount);
-  }
-
-  function renderParagraph() {
-    return paragraph.split(' ').map((word, wordIndex) => {
-      return (
-        <span key={wordIndex}>
-          {word.split('').map((char, charIndex) => {
-            let color = 'black';
-            if (wordIndex < inputText.split(' ').length) {
-              const inputWord = inputText.split(' ')[wordIndex];
-              if (charIndex < inputWord.length) {
-                color = char === inputWord[charIndex] ? 'green' : 'red';
-              }
-            }
-            return <span key={charIndex} style={{ color: color }}>{char}</span>;
-          })}
-          <span> </span>
-        </span>
-      );
-    });
-  }
-
-  return (
-    <div id='testing'>
-      <h2>Timer: {timer} sec</h2>
-      <h2>Words per minute: {timer === 0 ? wordsPerMinute : 0}</h2>
-      <p id='text'>{renderParagraph()}</p>
-      <textarea 
-        id="textarea" 
-        cols="60" 
-        rows="10" 
-        value={inputText}
-        onChange={handleInputChange}
-        disabled={timer === 0}
-      ></textarea>
-      <div>
-        {timer === 0 && <button onClick={resetGame}>Restart</button>}
-      </div>
-    </div>
-  )
-}
-
-function ButtonStart({ onBeginGame }) {
-  return (
-    <div id='buttonStart'>
-      <h1>Check your typing skills in a minute</h1>
-      <button onClick={onBeginGame}>Start test</button>
-    </div>
-  )
-}
+import StartGame from './components/StartGame';
+import ButtonStart from './components/ButtonStart';
 
 function App() {
   const paragraphList = [
     "Avocados are a fruit, not a vegetable. They're technically considered a single-seeded berry, believe it or not. An avocado is a bright green fruit with a large pit and dark leathery skin. It's also known as alligator pear or butter fruit. Avocados are a favorite of the produce section. They're the go-to ingredient for guacamole dips. And they're turning up in everything from salads and wraps to smoothies and even brownies. So what exactly makes this pear-shaped berry (yes, that's right!) such a superfood?",
     "Human teeth are the only part of the body that cannot heal themselves. Teeth are coated in enamel which is not a living tissue. Dental anatomy is a field of anatomy dedicated to the study of tooth structure. The development, appearance, and classification of teeth fall within its field of study, though dental occlusion, or contact between teeth, does not. Dental anatomy is also a taxonomic science as it is concerned with the naming of teeth and their structures. This information serves a practical purpose for dentists, enabling them to easily identify and describe teeth and structures during treatment.",
-    "There's a fruit that tastes like chocolate pudding. Can we get in on this? Apparently, there's a fruit native to Central and South America called black sapote that tastes like chocolate and sweet custard.",
-    "Pigs can't look up into the sky. The anatomy of their spine and neck muscles limits their movement and restricts their head from being able to look upwards.",
-    "One part of Istanbul is in Europe and the other is in Asia. Part of it neighbours Greece and Bulgaria, therefore sitting in Europe and the other part neighbours Syria, Iran, and Iraq beyond Turkey’s borders, therefore classing as Asia. The Bosphorus Strait runs between them - a narrow body of water that connects the Black Sea to the Mediterranean Sea via the Sea of Marmara."
+    "From pineapples, coconuts, and papayas to passion fruit and cherimoyas, tropical fruits open up a new world of flavor with each taste, whether sliced into fruit salads, mixed into cocktails (hello, piña coladas), or added to savory dishes. Lesser-known and more exotic is black sapote, dubbed the 'chocolate pudding fruit' by those in the know. A fruit that draws comparisons to everyone's favorite childhood dessert (or guilty pleasure) is certainly intriguing. We reached out to tropical fruit specialists to learn more about black sapote, including what it looks like, if it really does taste like chocolate pudding, where to find it, and the best ways to enjoy it",
+    "It is not physically impossible for pigs to look up at the sky. Pigs, like many animals, have the ability to look upward. They have flexible necks that allow them to tilt their heads back and look at the sky or in any direction they choose. In fact, if you observe pigs in various settings, you may notice them looking up at the sky or at objects above them. The misconception that pigs cannot look up at the sky might stem from their usual behavior of keeping their heads down while foraging for food on the ground. Additionally, the anatomy of a pig's neck may make it look less flexible compared to some other animals, but they are certainly capable of looking up and observing their surroundings.",
+    "Istanbul, the largest city in Turkey and the fifth-largest city in the world by population, is considered European, yet it occupies two different continents. One part of Istanbul lies in Europe and the other part lies in Asia. Istanbul’s European part is separated from its Asian part by the Bosphorus strait, a 31-km-long waterway that connects the Black Sea with the Sea of Marmara, and forms a natural boundary between the two continents. Two suspension bridges across the Bosphorus, the Bosphorus Bridge and the Fatih Sultan Mehmet Bridge, also called Bosphorus Bridge II connect the two sides, yet many tourists prefer to visit the European side of Istanbul because of its historical significance. The European side is also the city’s commercial center with banks, stores and corporations and two-third of its population. The Asian side feels more relaxed, with wide boulevards, residential neighbourhoods and fewer hotels and tourist attractions."
   ];
   const [gameOn, setGameOn] = useState(false);
   const [paragraph, setParagraph] = useState("");
 
   function generateRandomText() {
-    setParagraph(paragraphList[Math.floor(Math.random() * paragraphList.length)]);
+    setParagraph(paragraphList[Math.floor(Math.random() 
+      * paragraphList.length)]);
   }
   
   function onBeginGame() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RenderParagraph({paragraph, inputText}) {
+export default function RenderParagraph({ paragraph, inputText }) {
     return paragraph.split(' ').map((word, wordIndex) => {
       return (
         <span key={wordIndex}>

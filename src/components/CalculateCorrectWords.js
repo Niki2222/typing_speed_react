@@ -1,6 +1,6 @@
 export default function CalculateCorrectWords(props) {
-    const {paragraph, inputText, setInputText, setIsTimerStarted, 
-        setCorrectWords, isTimerStarted, timer} = props;
+    const { paragraph, inputText, setInputText, setIsTimerStarted, 
+        setCorrectWords, isTimerStarted, timer } = props;
 
     function handleInputChange(e) {
         if (!isTimerStarted) {

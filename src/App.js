@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import StartGame from './components/StartGame';
-import ButtonStart from './components/ButtonStart';
+import GameRunner from './components/GameRunner';
 
 function App() {
-  const [gameOn, setGameOn] = useState(false);
+  const [isGameRunning, setIsGameRunning] = useState(false);
   const [paragraph, setParagraph] = useState("");
 
   useEffect(() => {
@@ -15,21 +14,24 @@ function App() {
         })
   }, []);
   
-  function onBeginGame() {
-    setGameOn(true);
+  function handleBeginGame() {
+    setIsGameRunning(true);
   }
 
   function resetGame() {
-    setGameOn(false);
+    setIsGameRunning(false);
     setParagraph("");
   }
 
   return (
     <div className="App">
-      {(gameOn) ? (
-        <StartGame paragraph={paragraph} resetGame={resetGame} />
+      {(!isGameRunning) ? (
+        <div>
+        <h1>Check your typing skills in a minute</h1>
+        <button onClick={handleBeginGame}>Start test</button>
+      </div>
       ) : (
-        <ButtonStart onBeginGame={onBeginGame}/>
+        <GameRunner paragraph={paragraph} resetGame={resetGame} />
       )}
     </div>
   );

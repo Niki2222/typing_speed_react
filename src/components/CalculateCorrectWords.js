@@ -17,7 +17,7 @@ export default function CalculateCorrectWords(props) {
 
         words.forEach((word, index) => {
             if (word === paragraphWords[index]) {
-            ++correctCount;
+                ++correctCount;
             }
         });
         setCorrectWords(correctCount);

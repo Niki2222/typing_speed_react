@@ -21,8 +21,7 @@ export default function GameRunner({ paragraph, resetGame }) {
         paragraph={paragraph} inputText={inputText}
         isTimerStarted={isTimerStarted} timer={timer}
         setInputText={setInputText} setCorrectWords={setCorrectWords} 
-        setIsTimerStarted={setIsTimerStarted}
-        />
+        setIsTimerStarted={setIsTimerStarted} />
       <div>
         {timer === 0 && <button onClick={resetGame}>Restart</button>}
       </div>

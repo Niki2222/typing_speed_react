@@ -1,5 +1,5 @@
-export default function CalculateCorrectWords(props) {
-    const { paragraph, inputText, setInputText, setIsTimerStarted, 
+export default function WordsPerMinuteInput(props) {
+    const { paragraph, inputText, setInputText, setIsTimerStarted,
         setCorrectWords, isTimerStarted, timer } = props;
 
     function handleInputChange(e) {
@@ -24,9 +24,9 @@ export default function CalculateCorrectWords(props) {
     }
 
     return (
-        <textarea 
-            cols="60" 
-            rows="10" 
+        <textarea
+            cols="60"
+            rows="10"
             value={inputText}
             onChange={handleInputChange}
             disabled={timer === 0}
